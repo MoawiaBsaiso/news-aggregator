@@ -1,73 +1,132 @@
-# React + TypeScript + Vite
+# 🌍 News Aggregator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, full-featured news aggregation web application built with React, TypeScript, and Redux Toolkit — featuring a stunning Three.js-inspired hero animation and real-time news from around the world.
 
-Currently, two official plugins are available:
+🔗 **[Live Demo](https://news-aggregator-roan-kappa.vercel.app/)** | 💻 **[Source Code](https://github.com/MoawiaBsaiso/news-aggregator)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## ✨ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 🌐 **Real-time News** — Top headlines from trusted global sources via GNews API
+- 🔍 **Search & Filter** — Search by keyword or filter by category
+- 🔖 **Bookmarks** — Save articles with localStorage persistence
+- 🌙 **Dark / Light Mode** — Smooth theme switching
+- 📱 **Fully Responsive** — Works on all screen sizes
+- ⚡ **Optimized Performance** — Loading states, error handling, pagination
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🏗️ Architecture
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── app/               # Redux store configuration
+├── features/          # Feature-based slices (news, filters, bookmarks, ui)
+├── services/          # API client, GNews service, DTO mapper
+├── components/        # Reusable UI components
+├── pages/             # Route-level page components
+├── hooks/             # Custom React hooks (useNews, useFilters, useBookmarks)
+└── utils/             # Constants and shared utilities
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+**Key architectural decisions:**
+- **Feature-based folder structure** — each feature owns its slice, service, and types
+- **DTO Mapper pattern** — raw API responses are mapped to clean internal models before entering the store
+- **Custom Hooks as abstraction layer** — components never interact with Redux directly
+- **Vercel Proxy** — serverless rewrites handle CORS for production API calls
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Framework | React 18 + TypeScript |
+| State Management | Redux Toolkit |
+| Routing | React Router v6 |
+| Styling | Tailwind CSS v4 |
+| HTTP Client | Axios |
+| Animation | CSS Animations + Custom Hero |
+| Build Tool | Vite |
+| Deployment | Vercel |
+| News API | GNews API |
+
+---
+
+## 🚀 Getting Started
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/MoawiaBsaiso/news-aggregator.git
+cd news-aggregator
+
+# 2. Install dependencies
+npm install
+
+# 3. Set up environment variables
+cp .env.example .env
+# Add your GNews API key → https://gnews.io
+
+# 4. Start development server
+npm run dev
 ```
+
+### Environment Variables
+
+```env
+VITE_GNEWS_API_KEY=your_gnews_api_key_here
+```
+
+---
+
+## 📐 Design Patterns
+
+### DTO Mapper
+Raw API responses are normalized before entering the Redux store:
+```typescript
+API Response → newsMapper.ts → Article Model → Redux Store → Components
+```
+
+### Custom Hooks
+Components stay clean by consuming hooks instead of Redux directly:
+```typescript
+const { articles, status, error } = useNews();
+const { toggleBookmark, isBookmarked } = useBookmarks();
+```
+
+### Vercel Proxy (CORS Solution)
+```
+Browser → /api/news/* (Vercel Rewrite) → gnews.io ✅
+```
+
+---
+
+## 📸 Screenshots
+
+> Coming soon
+
+---
+
+## 🗺️ Roadmap
+
+<!-- - [ ] Three.js Globe animation -->
+- [ ] User authentication
+- [ ] Personalized news feed
+- [ ] PWA support
+- [ ] Unit & integration tests
+
+---
+
+## 👨‍💻 Author
+
+**Moawia S. K. Bsaiso**
+- 📧 moawia.b56@gmail.com
+- 🔗 [LinkedIn](https://www.linkedin.com/in/moawia-bsaiso-1a8a58247)
+- 🐙 [GitHub](https://github.com/MoawiaBsaiso)
+
+---
+
+## 📄 License
+
+MIT License — feel free to use this project as a reference or template.
