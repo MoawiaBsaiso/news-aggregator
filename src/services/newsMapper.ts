@@ -15,10 +15,9 @@ export interface RawArticle {
   description: string | null;
   content: string | null;
   url: string;
-  urlToImage: string | null;
+  image: string | null;
   publishedAt: string;
-  source: { name: string };
-  author: string | null;
+  source: { name: string; url: string };
 }
 
 export const mapArticle = (raw: RawArticle): Article => ({
@@ -27,16 +26,14 @@ export const mapArticle = (raw: RawArticle): Article => ({
   description: raw.description ?? 'No description available',
   content: raw.content ?? '',
   url: raw.url,
-  imageUrl: raw.urlToImage ?? '/placeholder.png',
+  imageUrl: raw.image ?? '/placeholder.png',
   publishedAt: raw.publishedAt,
   source: raw.source?.name ?? 'Unknown',
-  author: raw.author ?? 'Unknown',
+  author: raw.source?.name ?? 'Unknown',
 });
 
 export const mapArticles = (rawList: RawArticle[]): Article[] =>
   rawList
     .filter((a) => a.title !== '[Removed]')
-    .filter((a) => a.urlToImage !== null)  // ← أضف هاد السطر
+    .filter((a) => a.image !== null)
     .map(mapArticle);
-
-    

@@ -1,18 +1,17 @@
 import axios from 'axios';
-import { BASE_URL, API_KEY } from '../utils/constants';
 
 const apiClient = axios.create({
-  baseURL: BASE_URL,
+  baseURL: 'https://gnews.io/api/v4',
   params: {
-    apiKey: API_KEY,
+    token: import.meta.env.VITE_GNEWS_API_KEY,
+    lang: 'en',
   },
 });
 
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    const message =
-      error.response?.data?.message || 'Something went wrong';
+    const message = error.response?.data?.errors?.[0] || 'Something went wrong';
     return Promise.reject(new Error(message));
   }
 );
