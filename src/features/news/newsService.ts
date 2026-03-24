@@ -36,7 +36,11 @@ export const fetchNews = async ({
     ? { q: query, max: DEFAULT_PAGE_SIZE, page }
     : { category: CATEGORY_MAP[category], max: DEFAULT_PAGE_SIZE, page };
 
-  const { data } = await apiClient.get(endpoint, { params });
+  const { data } = await apiClient.get(endpoint, {
+  params: import.meta.env.PROD
+    ? { endpoint: endpoint.replace('/', ''), ...params }
+    : params,
+});
 
   return {
     articles: mapArticles(data.articles),
