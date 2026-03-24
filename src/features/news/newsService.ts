@@ -41,7 +41,7 @@ export const fetchNews = async ({
     ? { endpoint: endpoint.replace('/', ''), ...params }
     : params,
 });
-
+console.log('API Response:', data); 
   return {
     articles: mapArticles(data.articles),
     totalResults: data.totalArticles ?? 0,

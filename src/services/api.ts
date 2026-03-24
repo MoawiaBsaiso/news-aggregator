@@ -3,10 +3,13 @@ import axios from 'axios';
 const isProd = import.meta.env.PROD;
 
 const apiClient = axios.create({
-  baseURL: isProd ? '/api' : 'https://gnews.io/api/v4',
-  params: isProd
-    ? {}
-    : { token: import.meta.env.VITE_GNEWS_API_KEY, lang: 'en' },
+  baseURL: isProd ? '/api/news' : 'https://gnews.io/api/v4',
+  params: {
+    token: isProd
+      ? import.meta.env.VITE_GNEWS_API_KEY
+      : import.meta.env.VITE_GNEWS_API_KEY,
+    lang: 'en',
+  },
 });
 
 apiClient.interceptors.response.use(
